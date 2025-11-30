@@ -11,4 +11,4 @@ else:
     ip, port = bulbs[0]
 
     controller = BulbController(ip, port)
-    controller.toggle()
+    controller.turn_off(mode="smooth")

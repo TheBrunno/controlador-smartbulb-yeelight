@@ -7,11 +7,11 @@ class BulbController:
         self.port = port
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #TCP
 
-    def turn_on(self):
+    def turn_on(self, mode):
         cmd = {
             "id": 1,
             "method": "set_power",
-            "params": ["on", "smooth", 500]
+            "params": ["on", mode, 500]
         }
 
         msg = (json.dumps(cmd) + "\r\n").encode()
@@ -22,11 +22,11 @@ class BulbController:
         self.socket.recv(1024)
         self.socket.close()
 
-    def turn_off(self):
+    def turn_off(self, mode):
         cmd = {
             "id": 1,
             "method": "set_power",
-            "params": ["off", "smooth", 500]
+            "params": ["off", mode, 500]
         }
 
         msg = (json.dumps(cmd) + "\r\n").encode()
