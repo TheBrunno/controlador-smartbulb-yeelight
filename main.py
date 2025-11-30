@@ -12,4 +12,4 @@ else:
 
     controller = BulbController(ip, port, 0)
     controller.turn_on()
-    controller.set_bright(100)
+    controller.set_rgb((34, 34, 54))

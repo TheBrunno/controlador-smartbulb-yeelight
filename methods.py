@@ -57,3 +57,13 @@ class BulbController:
             "params": [percentage, mode, self.default_transition]
         }
         self.send_params(cmd)
+
+    def set_rgb(self, rgb:tuple, mode:str="smooth"):
+        rgb_decimal = (rgb[0]*65536)+(rgb[1]*256)+rgb[2]
+
+        cmd = {
+            "id": 1,
+            "method": "set_rgb",
+            "params": [rgb_decimal, mode, self.default_transition]
+        }
+        self.send_params(cmd)
