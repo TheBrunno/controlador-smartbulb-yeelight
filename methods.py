@@ -2,40 +2,36 @@ import socket
 import json
 
 class BulbController:
-    def __init__(self, ip, port):
+    def __init__(self, ip:str, port:int, default_transition:int=0):
         self.ip = ip
         self.port = port
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #TCP
+        self.default_transition = default_transition
 
-    def turn_on(self, mode):
+    def send_params(self, params):
+        params = (json.dumps(params) + "\r\n").encode()
+
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+            sock.connect((self.ip, self.port))
+            sock.send(params)
+            sock.recv(1024)
+
+    def turn_on(self, mode="smooth"):
         cmd = {
             "id": 1,
             "method": "set_power",
-            "params": ["on", mode, 500]
+            "params": ["on", mode, self.default_transition]
         }
+        self.send_params(cmd)
 
-        msg = (json.dumps(cmd) + "\r\n").encode()
-         
-        self.socket.connect((self.ip, self.port))
-        self.socket.send(msg)
-
-        self.socket.recv(1024)
-        self.socket.close()
-
-    def turn_off(self, mode):
+    def turn_off(self, mode="smooth"):
         cmd = {
             "id": 1,
             "method": "set_power",
-            "params": ["off", mode, 500]
+            "params": ["off", mode, self.default_transition]
         }
+        self.send_params(cmd)
 
-        msg = (json.dumps(cmd) + "\r\n").encode()
-
-        self.socket.connect((self.ip, self.port))
-        self.socket.send(msg)
-        
-        self.socket.recv(1024)
-        self.socket.close()
 
     def toggle(self):
         cmd = {
@@ -43,11 +39,21 @@ class BulbController:
             "method": "toggle",
             "params": []
         }
+        self.send_params(cmd)
 
-        msg = (json.dumps(cmd) + "\r\n").encode()
 
-        self.socket.connect((self.ip, self.port))
-        self.socket.send(msg)
+    def set_bright(self, percentage:int, mode:str="smooth"):
+        cmd = {
+            "id": 1,
+            "method": "set_bright",
+            "params": [percentage, mode, self.default_transition]
+        }
+        self.send_params(cmd)
 
-        self.socket.recv(1024)
-        self.socket.close()
+    def set_bright(self, percentage:int, mode:str="smooth"):
+        cmd = {
+            "id": 1,
+            "method": "set_bright",
+            "params": [percentage, mode, self.default_transition]
+        }
+        self.send_params(cmd)

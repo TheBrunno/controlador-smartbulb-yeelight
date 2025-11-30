@@ -10,5 +10,6 @@ else:
     print("Encontradas:", bulbs)
     ip, port = bulbs[0]
 
-    controller = BulbController(ip, port)
-    controller.turn_off(mode="smooth")
+    controller = BulbController(ip, port, 0)
+    controller.turn_on()
+    controller.set_bright(100)
