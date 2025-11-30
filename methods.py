@@ -67,3 +67,11 @@ class BulbController:
             "params": [rgb_decimal, mode, self.default_transition]
         }
         self.send_params(cmd)
+
+    def set_ct_abx(self, kelvin:int, mode:str="smooth"):
+        cmd = {
+            "id": 1,
+            "method": "set_ct_abx",
+            "params": [kelvin, mode, self.default_transition]
+        }
+        self.send_params(cmd)
