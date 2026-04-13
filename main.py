@@ -1,15 +1,5 @@
-from discover import discover_yeelight_bulbs
-from methods import BulbController
+from app import run_app
 
 
-bulbs = discover_yeelight_bulbs()
-
-if not bulbs:
-    print("Nenhuma lâmpada encontrada.")
-else:
-    print("Encontradas:", bulbs)
-    ip, port = bulbs[0]
-
-    controller = BulbController(ip, port, 0)
-    controller.turn_on()
-    controller.set_ct_abx(3000)
+if __name__ == "__main__":
+    run_app()
